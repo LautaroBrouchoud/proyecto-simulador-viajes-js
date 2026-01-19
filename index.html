@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tienda Interactiva</title>
+  <meta charset="UTF-8">
+  <title>Reservas de Viajes y Excursiones</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Tienda Interactiva</h1>
-  <p>Actualiza la página para volver a comprar</p>
 
-  
-    <script src="main.js"></script>
+  <h1>Simulador de Reservas de Viajes</h1>
+
+  <p>
+    Este simulador permite al usuario explorar diferentes opciones de viajes y excursiones
+    disponibles y realizar una reserva de manera interactiva.</p>
+
+  <section>
+    <h2>Destinos disponibles</h2>
+    <div id="lista-viajes"></div>
+  </section>
+
+  <section>
+    <h2>Mis reservas</h2>
+    <div id="reservas"></div>
+    <button id="btn-vaciar">Cancelar todas las reservas</button>
+  </section>
+
+  <section>
+    <h2>Confirmar viaje</h2>
+    <form id="formulario">
+      <input type="text" id="nombre" placeholder="Nombre del viajero" required>
+      <button type="submit">Confirmar reserva</button>
+    </form>
+    <p id="mensaje-final"></p>
+  </section>
+
+  <script src="main.js"></script>
 </body>
 </html>

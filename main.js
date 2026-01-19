@@ -1,85 +1,106 @@
-// VARIABLES Y CONSTANTES
-    const productos = [
-      { nombre: "Mouse", precio: 5000 },
-      { nombre: "Teclado", precio: 12000 },
-      { nombre: "Auriculares", precio: 8000 }
-    ];
+// VIAJES DISPONIBLES
+const viajes = [
+  { id: 1, destino: "Bariloche", duracion: "5 días" },
+  { id: 2, destino: "Cataratas del Iguazú", duracion: "3 días" },
+  { id: 3, destino: "Mendoza", duracion: "4 días" }
+];
 
-    let carrito = [];
-    let total = 0;
+// DOM
+const listaViajes = document.getElementById("lista-viajes");
+const reservasHTML = document.getElementById("reservas");
+const btnVaciar = document.getElementById("btn-vaciar");
+const formulario = document.getElementById("formulario");
+const mensajeFinal = document.getElementById("mensaje-final");
 
-    console.log("Productos disponibles:", productos);
+// STORAGE
+let reservas = JSON.parse(localStorage.getItem("reservasViajes")) || [];
 
-    // Mostrar productos disponibles
-    function mostrarProductos() {
-      let lista = "Productos disponibles:\n";
-      productos.forEach((p, index) => {
-        lista += index + 1 + ". " + p.nombre + " - $" + p.precio + "\n";
-      });
-      alert(lista);
-    }
+// MOSTRAR VIAJES
+function mostrarViajes() {
+  listaViajes.innerHTML = "";
 
-    // Agregar producto al carrito
-    function agregarAlCarrito() {
-      const opcion = prompt("Ingrese el número del producto que desea agregar:");
+  viajes.forEach(viaje => {
+    const div = document.createElement("div");
+    div.className = "viaje";
+    div.innerHTML = `
+      <p><strong>${viaje.destino}</strong></p>
+      <p>Duración: ${viaje.duracion}</p>
+      <button data-id="${viaje.id}">Reservar</button>
+    `;
+    listaViajes.appendChild(div);
+  });
+}
 
-      const index = parseInt(opcion) - 1;
+// AGREGAR RESERVA
+function reservarViaje(id) {
+  const viaje = viajes.find(v => v.id === id);
+  reservas.push(viaje);
+  actualizarReservas();
+}
 
-      if (isNaN(index) || index < 0 || index >= productos.length) {
-        alert("Opción inválida. Intente nuevamente.");
-        return;
-      }
+// MOSTRAR RESERVAS
+function mostrarReservas() {
+  reservasHTML.innerHTML = "";
 
-      carrito.push(productos[index]);
-      total += productos[index].precio;
+  if (reservas.length === 0) {
+    reservasHTML.innerHTML = "<p>No hay viajes reservados</p>";
+    return;
+  }
 
-      console.log("Producto agregado:", productos[index]);
-      alert("Agregado al carrito: " + productos[index].nombre);
-    }
+  reservas.forEach((reserva, index) => {
+    const div = document.createElement("div");
+    div.className = "reserva";
+    div.innerHTML = `
+      ${reserva.destino} (${reserva.duracion})
+      <button data-index="${index}">Eliminar</button>
+    `;
+    reservasHTML.appendChild(div);
+  });
+}
 
-    // Mostrar resumen
-    function mostrarCarrito() {
-      if (carrito.length === 0) {
-        alert("El carrito está vacío.");
-        return;
-      }
+// ACTUALIZAR STORAGE
+function actualizarReservas() {
+  localStorage.setItem("reservasViajes", JSON.stringify(reservas));
+  mostrarReservas();
+}
 
-      let resumen = "Carrito actual:\n";
-      carrito.forEach((p) => {
-        resumen += "- " + p.nombre + " ($" + p.precio + ")\n";
-      });
-      resumen += "\nTOTAL: $" + total;
+// EVENTOS
+listaViajes.addEventListener("click", e => {
+  if (e.target.tagName === "BUTTON") {
+    reservarViaje(Number(e.target.dataset.id));
+  }
+});
 
-      alert(resumen);
-    }
+reservasHTML.addEventListener("click", e => {
+  if (e.target.tagName === "BUTTON") {
+    reservas.splice(Number(e.target.dataset.index), 1);
+    actualizarReservas();
+  }
+});
 
-    // Proceso principal
+btnVaciar.addEventListener("click", () => {
+  reservas = [];
+  actualizarReservas();
+});
 
-    alert("Bienvenido a la tienda interactiva!");
+// FORMULARIO
+formulario.addEventListener("submit", e => {
+  e.preventDefault();
 
-    let continuar = true;
+  if (reservas.length === 0) {
+    mensajeFinal.textContent = "No hay reservas para confirmar.";
+    return;
+  }
 
-    while (continuar) {
-      mostrarProductos();
+  const nombre = document.getElementById("nombre").value;
+  mensajeFinal.textContent = `Reserva confirmada para ${nombre}. ¡Buen viaje! ✈️`;
 
-      agregarAlCarrito();
+  reservas = [];
+  localStorage.clear();
+  mostrarReservas();
+  formulario.reset();
+});
 
-      mostrarCarrito();
-
-      continuar = confirm("¿Desea seguir comprando?");
-    }
-
-    // Confirmación de compra final
-    if (carrito.length > 0) {
-      const confirmar = confirm("¿Desea confirmar su compra por $" + total + "?");
-
-      if (confirmar) {
-        alert("¡Compra realizada con éxito! Gracias por su compra.");
-        console.log("Compra finalizada:", carrito);
-      } else {
-        alert("Compra cancelada.");
-        console.log("El usuario canceló la compra.");
-      }
-    } else {
-      alert("No agregó productos. ¡Hasta la próxima!");
-    }
+// INIT
+mostrarViajes();
+mostrarReservas();

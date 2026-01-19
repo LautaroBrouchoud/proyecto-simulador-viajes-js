@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+p {
+  text-align: justify;
+}
+
+section {
+  margin-top: 30px;
+}
+
+.viaje, .reserva {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+}
+
+#mensaje-final {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+}
