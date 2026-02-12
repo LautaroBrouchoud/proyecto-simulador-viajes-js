@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "destino": "Bariloche",
+    "duracionBase": 5,
+    "precioPorDia": 50000,
+    "descripcion": "Hotel 3★, desayuno y excursión al Cerro Catedral.",
+    "imagen": "imagenes/bariloche.jpg"
+  },
+  {
+    "id": 2,
+    "destino": "Cataratas del Iguazú",
+    "duracionBase": 3,
+    "precioPorDia": 65000,
+    "descripcion": "Hotel 4★, traslados y entrada al Parque Nacional.",
+    "imagen": "imagenes/cataratas.jpg"
+  },
+  {
+    "id": 3,
+    "destino": "Mendoza",
+    "duracionBase": 4,
+    "precioPorDia": 55000,
+    "descripcion": "Hotel 3★, tour de bodegas y degustación.",
+    "imagen": "imagenes/mendoza.jpg"
+  }
+]
+
